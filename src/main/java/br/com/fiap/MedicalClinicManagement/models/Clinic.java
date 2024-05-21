@@ -40,13 +40,13 @@ public class Clinic {
     @JoinColumn(name = "id_doctors")
     private List<Doctor> doctors;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_patiens")
-    private List<Patient> patients;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_appointments")
-    private List<Appointment> appointments;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "id_patiens")
+//    private List<Patient> patients;
+//
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "id_appointments")
+//    private List<Appointment> appointments;
 
     @Column(name = "dt_created_at")
     private LocalDateTime createdAt;
