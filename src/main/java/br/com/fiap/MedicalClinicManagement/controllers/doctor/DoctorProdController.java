@@ -32,7 +32,7 @@ public class DoctorProdController {
     public ResponseEntity<?> create(@RequestBody @Valid DoctorRegisterDTO doctorRegisterDTO, UriComponentsBuilder uriBuilder) {
         Doctor doctor = doctorService.create(doctorRegisterDTO);
 
-        URI uri = uriBuilder.path("/api/address/{id}").buildAndExpand(doctor.getId()).toUri();
+        URI uri = uriBuilder.path("/api/prod/{id}").buildAndExpand(doctor.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
     }

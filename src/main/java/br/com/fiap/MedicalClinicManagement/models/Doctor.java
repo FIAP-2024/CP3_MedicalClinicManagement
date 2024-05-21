@@ -30,11 +30,12 @@ public class Doctor {
     @Column(name = "ds_specialty")
     private String specialty; // Especialidade do médico
 
-    @ManyToOne
-    @JoinColumn(name = "clinic_id")
-    private Clinic clinic; // Clínica à qual o médico pertence
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_clinic")
+    private List<Clinic> clinic; // Clínica à qual o médico pertence
 
-    @ManyToMany(mappedBy = "doctors")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_pacients")
     private List<Patient> patients; // Lista de pacientes associados ao médico
 
     @Column(name = "dt_created_at")
