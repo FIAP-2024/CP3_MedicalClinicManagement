@@ -8,6 +8,7 @@ import br.com.fiap.MedicalClinicManagement.repositories.DoctorRepository;
 import br.com.fiap.MedicalClinicManagement.services.DoctorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;

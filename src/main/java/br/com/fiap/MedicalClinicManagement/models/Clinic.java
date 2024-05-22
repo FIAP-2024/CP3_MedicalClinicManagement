@@ -1,5 +1,7 @@
 package br.com.fiap.MedicalClinicManagement.models;
 
+import br.com.fiap.MedicalClinicManagement.controllers.dtos.clinic.ClinicRegisterDTO;
+import br.com.fiap.MedicalClinicManagement.controllers.dtos.clinic.ClinicUpdateDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -40,13 +42,13 @@ public class Clinic {
     @JoinColumn(name = "id_doctors")
     private List<Doctor> doctors;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "id_patiens")
-//    private List<Patient> patients;
-//
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "id_appointments")
-//    private List<Appointment> appointments;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_patiens")
+    private List<Patient> patients;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_appointments")
+    private List<Appointment> appointments;
 
     @Column(name = "dt_created_at")
     private LocalDateTime createdAt;
@@ -66,7 +68,7 @@ public class Clinic {
 
     public void updateInformation(ClinicUpdateDTO clinicUpdateDTO) {
         if (clinicUpdateDTO.name() != null) {
-            this.name = clinicUpdateDTO.name();
+                this.name = clinicUpdateDTO.name();
         }
 
         if (clinicUpdateDTO.address() != null) {

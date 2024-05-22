@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -40,15 +41,15 @@ public class Appointment {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id")
-    private Doctor doctor;
+    private List<Doctor> doctor;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id")
-    private Patient patient;
+    private List<Patient> patient;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "clinic_id")
-    private Clinic clinic;
+    private List<Clinic> clinic;
 
     public Appointment (AppointmentRegisterDTO appointmentRegisterDTO) {
         this.dateTime = appointmentRegisterDTO.dateTime();

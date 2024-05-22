@@ -1,13 +1,14 @@
 package br.com.fiap.MedicalClinicManagement.services;
-import br.com.fiap.MedicalClinicManagement.controllers.dtos.ClinicDetailedDTO;
-import br.com.fiap.MedicalClinicManagement.controllers.dtos.ClinicRegisterDTO;
+
+import br.com.fiap.MedicalClinicManagement.controllers.dtos.clinic.ClinicDetailedDTO;
+import br.com.fiap.MedicalClinicManagement.controllers.dtos.clinic.ClinicRegisterDTO;
+import br.com.fiap.MedicalClinicManagement.controllers.dtos.clinic.ClinicUpdateDTO;
 import br.com.fiap.MedicalClinicManagement.models.Clinic;
 import br.com.fiap.MedicalClinicManagement.repositories.ClinicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.awt.print.Pageable;
 
 @Service
 public class ClinicService {
@@ -29,25 +30,21 @@ public class ClinicService {
     }
 
     public ClinicDetailedDTO get(Long id) {
-        return new ClinicDetailedDTO(clinicRepository.findOneByFinishedAtIsNullAndIdAddress(id));
+        return new ClinicDetailedDTO(clinicRepository.findOneByFinishedAtIsNullAndIdClinic(id));
     }
 
     public void delete(Long id) {
-        Clinic address = addressRepository.findOneByFinishedAtIsNullAndIdAddress(id);
-
-        address.disable();
-
-        addressRepository.save(address);
+        clinicRepository.deleteById(id);
     }
 
-    public AddressDetailedDTO update(Long id, AddressUpdateDTO addressUpdateDTO) {
-        Address address = addressRepository.findOneByFinishedAtIsNullAndIdAddress(id);
+    public ClinicDetailedDTO update(Long id, ClinicUpdateDTO clinicUpdateDTO) {
+        Clinic clinic = clinicRepository.findOneByFinishedAtIsNullAndIdClinic(id);
 
-        address.updateInformation(addressUpdateDTO);
+        clinic.updateInformation(clinicUpdateDTO);
 
-        addressRepository.save(address);
+        clinicRepository.save(clinic);
 
-        return new AddressDetailedDTO(address);
+        return new ClinicDetailedDTO(clinic);
     }
 
 
