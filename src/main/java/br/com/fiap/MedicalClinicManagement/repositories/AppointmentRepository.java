@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
-    Page<Appointment> findByFinishedAtIsNull(Pageable pagination);
+    Page<Appointment> findByUpdatedAtIsNull(Pageable pagination);
 
-    Appointment findOneByFinishedAtIsNullAndIdAppointment(Long idAppointment);
+    Appointment findOneByUpdatedAtIsNullAndId(Long id);
 }

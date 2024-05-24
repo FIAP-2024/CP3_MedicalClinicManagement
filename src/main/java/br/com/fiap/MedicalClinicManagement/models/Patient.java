@@ -2,7 +2,7 @@ package br.com.fiap.MedicalClinicManagement.models;
 
 import br.com.fiap.MedicalClinicManagement.controllers.dtos.patient.PatientRegisterDTO;
 import br.com.fiap.MedicalClinicManagement.controllers.dtos.patient.PatientUpdateDTO;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -51,7 +51,6 @@ public class Patient {
     private String maritalStatus;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_appointments")
     private List<Appointment> appointments;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

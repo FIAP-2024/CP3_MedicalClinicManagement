@@ -5,17 +5,23 @@ import br.com.fiap.MedicalClinicManagement.controllers.dtos.appointment.Appointm
 import br.com.fiap.MedicalClinicManagement.controllers.dtos.appointment.AppointmentUpdateDTO;
 import br.com.fiap.MedicalClinicManagement.models.Appointment;
 import br.com.fiap.MedicalClinicManagement.services.AppointmentService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
 @RequestMapping("api/public/appointments")
@@ -29,30 +35,54 @@ public class AppointmentProdController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid AppointmentRegisterDTO appointmentRegisterDTO, UriComponentsBuilder uriBuilder) {
-        Appointment appointment = appointmentService.create(appointmentRegisterDTO);
+    public ResponseEntity<EntityModel<AppointmentDetailedDTO>> create(@RequestBody @Valid AppointmentRegisterDTO appointmentRegisterDTO,
+                                                                      UriComponentsBuilder uriBuilder) {
+        AppointmentDetailedDTO appointment = appointmentService.create(appointmentRegisterDTO);
 
-        URI uri = uriBuilder.path("/api/prod/{id}").buildAndExpand(appointment.getId()).toUri();
+        EntityModel<AppointmentDetailedDTO> appointmentModel = EntityModel.of(appointment);
 
-        return ResponseEntity.created(uri).build();
+        Link selfLink = linkTo(methodOn(AppointmentProdController.class).find(appointment.id())).withSelfRel();
+        Link appointmentsLink = linkTo(methodOn(AppointmentProdController.class).list(Pageable.unpaged())).withRel("all-appointments");
+        appointmentModel.add(selfLink, appointmentsLink);
+
+        URI location = uriBuilder.path("/api/prod/appointments/{id}").buildAndExpand(appointment.id()).toUri();
+        return ResponseEntity.created(location).body(appointmentModel);
     }
 
     @GetMapping
-    public ResponseEntity<Page<AppointmentDetailedDTO>> list(@PageableDefault(size = 10, page = 0) Pageable pagination) {
+    public ResponseEntity<Page<EntityModel<AppointmentDetailedDTO>>> list(@PageableDefault(size = 10, page = 0) Pageable pagination) {
         Page<AppointmentDetailedDTO> page = appointmentService.list(pagination);
-        return ResponseEntity.ok(page);
+
+        Page<EntityModel<AppointmentDetailedDTO>> appointmentModels = page.map(appointmentDetailedDTO -> {
+            EntityModel<AppointmentDetailedDTO> appointmentModel = EntityModel.of(appointmentDetailedDTO);
+            Link selfLink = linkTo(methodOn(AppointmentProdController.class).find(appointmentDetailedDTO.id())).withSelfRel();
+            appointmentModel.add(selfLink);
+            return appointmentModel;
+        });
+
+        return ResponseEntity.ok(appointmentModels);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AppointmentDetailedDTO> find(@PathVariable("id") Long id) {
+    public ResponseEntity<EntityModel<AppointmentDetailedDTO>> find(@PathVariable("id") Long id) {
         AppointmentDetailedDTO appointmentDetailedDTO = appointmentService.get(id);
-        return ResponseEntity.ok(appointmentDetailedDTO);
+
+        EntityModel<AppointmentDetailedDTO> appointmentModel = EntityModel.of(appointmentDetailedDTO);
+        Link selfLink = linkTo(methodOn(AppointmentProdController.class).find(id)).withSelfRel();
+        appointmentModel.add(selfLink);
+
+        return ResponseEntity.ok(appointmentModel);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AppointmentDetailedDTO> update(@PathVariable("id") Long id, @RequestBody AppointmentUpdateDTO appointmentUpdateDTO) {
+    public ResponseEntity<EntityModel<AppointmentDetailedDTO>> update(@PathVariable("id") Long id, @RequestBody @Valid AppointmentUpdateDTO appointmentUpdateDTO) {
         AppointmentDetailedDTO appointmentDetailedDTO = appointmentService.update(id, appointmentUpdateDTO);
-        return ResponseEntity.ok(appointmentDetailedDTO);
+
+        EntityModel<AppointmentDetailedDTO> appointmentModel = EntityModel.of(appointmentDetailedDTO);
+        Link selfLink = linkTo(methodOn(AppointmentProdController.class).find(id)).withSelfRel();
+        appointmentModel.add(selfLink);
+
+        return ResponseEntity.ok(appointmentModel);
     }
 
     @DeleteMapping("/{id}")

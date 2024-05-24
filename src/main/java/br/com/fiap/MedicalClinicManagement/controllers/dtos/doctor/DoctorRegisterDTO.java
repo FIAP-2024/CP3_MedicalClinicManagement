@@ -1,7 +1,7 @@
 package br.com.fiap.MedicalClinicManagement.controllers.dtos.doctor;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public record DoctorRegisterDTO(
         @NotNull

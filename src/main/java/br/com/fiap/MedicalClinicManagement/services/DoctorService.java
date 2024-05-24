@@ -19,21 +19,21 @@ public class DoctorService {
         this.doctorRepository = doctorRepository;
     }
 
-    public Doctor create(DoctorRegisterDTO doctorRegisterDTO) {
+    public DoctorDetailedDTO create(DoctorRegisterDTO doctorRegisterDTO) {
         Doctor doctor = new Doctor(doctorRegisterDTO);
-        return doctorRepository.save(doctor);
+        return new DoctorDetailedDTO(doctorRepository.save(doctor));
     }
 
     public Page<DoctorDetailedDTO> list(Pageable pagination) {
-        return doctorRepository.findByFinishedAtIsNull(pagination).map(DoctorDetailedDTO::new);
+        return doctorRepository.findByUpdatedAtIsNull(pagination).map(DoctorDetailedDTO::new);
     }
 
     public DoctorDetailedDTO get(Long id) {
-        return new DoctorDetailedDTO(doctorRepository.findOneByFinishedAtIsNullAndIdDoctor(id));
+        return new DoctorDetailedDTO(doctorRepository.findOneByUpdatedAtIsNullAndId(id));
     }
 
     public DoctorDetailedDTO update(Long id, DoctorUpdateDTO doctorUpdateDTO) {
-        Doctor doctor = doctorRepository.findOneByFinishedAtIsNullAndIdDoctor(id);
+        Doctor doctor = doctorRepository.findOneByUpdatedAtIsNullAndId(id);
 
         doctor.updateInformation(doctorUpdateDTO);
 

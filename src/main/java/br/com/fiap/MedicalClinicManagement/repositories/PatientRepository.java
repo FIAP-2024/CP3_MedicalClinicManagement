@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PatientRepository extends JpaRepository<Patient, Long> {
-    Page<Patient> findByFinishedAtIsNull(Pageable pagination);
+    Page<Patient> findByUpdatedAtIsNull(Pageable pagination);
 
-    Patient findOneByFinishedAtIsNullAndIdPatient(Long idPatient);
+    Patient findOneByUpdatedAtIsNullAndId(Long id);
 }

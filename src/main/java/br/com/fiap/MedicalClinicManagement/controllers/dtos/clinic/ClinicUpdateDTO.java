@@ -1,7 +1,10 @@
 package br.com.fiap.MedicalClinicManagement.controllers.dtos.clinic;
 
-public record ClinicUpdateDTO(
+import javax.validation.constraints.NotNull;
 
+public record ClinicUpdateDTO(
+        @NotNull
+        Long id,
         String name,
         String address,
         String phone,

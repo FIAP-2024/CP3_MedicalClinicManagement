@@ -1,8 +1,11 @@
 package br.com.fiap.MedicalClinicManagement.controllers.dtos.clinic;
 
-import jakarta.validation.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public record ClinicRegisterDTO(
+        @NotNull
+        Long id,
         @NotBlank
         String name,
         @NotBlank

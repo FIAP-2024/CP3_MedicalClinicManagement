@@ -2,12 +2,11 @@ package br.com.fiap.MedicalClinicManagement.models;
 
 import br.com.fiap.MedicalClinicManagement.controllers.dtos.appointment.AppointmentRegisterDTO;
 import br.com.fiap.MedicalClinicManagement.controllers.dtos.appointment.AppointmentUpdateDTO;
-import br.com.fiap.MedicalClinicManagement.controllers.dtos.doctor.DoctorUpdateDTO;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class Appointment {
     @Column(name = "ds_notes")
     private String notes;
 
-    @Column(name = "dt_created_at")
+    @Column(name = "dt_created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "dt_updated_at")
@@ -41,15 +40,15 @@ public class Appointment {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id")
-    private List<Doctor> doctor;
+    private Doctor doctor;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id")
-    private List<Patient> patient;
+    private Patient patient;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "clinic_id")
-    private List<Clinic> clinic;
+    private Clinic clinic;
 
     public Appointment (AppointmentRegisterDTO appointmentRegisterDTO) {
         this.dateTime = appointmentRegisterDTO.dateTime();

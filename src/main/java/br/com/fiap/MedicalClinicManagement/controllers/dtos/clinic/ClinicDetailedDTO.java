@@ -4,20 +4,23 @@ import br.com.fiap.MedicalClinicManagement.controllers.dtos.appointment.Appointm
 import br.com.fiap.MedicalClinicManagement.controllers.dtos.doctor.DoctorDetailedDTO;
 import br.com.fiap.MedicalClinicManagement.controllers.dtos.patient.PatientDetailedDTO;
 import br.com.fiap.MedicalClinicManagement.models.Clinic;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
 public record ClinicDetailedDTO(
-        Long idClinic,
+        Long id,
         String name,
         String address,
         String phone,
         String email,
         String workingHours,
         String cnpj,
+        @JsonIgnore
         List<DoctorDetailedDTO> doctorlist,
+        @JsonIgnore
         List <PatientDetailedDTO> patientlist,
-
+        @JsonIgnore
         List<AppointmentDetailedDTO> appointmentlist
 
 ) {

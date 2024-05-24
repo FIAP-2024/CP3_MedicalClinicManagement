@@ -1,11 +1,11 @@
 package br.com.fiap.MedicalClinicManagement.controllers.dtos.patient;
 
-import jakarta.validation.constraints.NotBlank;
-
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public record PatientUpdateDTO(
-
+        @NotNull
+        Long id,
         String name,
         LocalDate birthDate,
         String cpf,

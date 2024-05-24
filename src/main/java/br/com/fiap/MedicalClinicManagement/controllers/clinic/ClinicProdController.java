@@ -3,19 +3,23 @@ package br.com.fiap.MedicalClinicManagement.controllers.clinic;
 import br.com.fiap.MedicalClinicManagement.controllers.dtos.clinic.ClinicDetailedDTO;
 import br.com.fiap.MedicalClinicManagement.controllers.dtos.clinic.ClinicRegisterDTO;
 import br.com.fiap.MedicalClinicManagement.controllers.dtos.clinic.ClinicUpdateDTO;
-import br.com.fiap.MedicalClinicManagement.models.Clinic;
 import br.com.fiap.MedicalClinicManagement.services.ClinicService;
-import jakarta.validation.Valid;
-import org.hibernate.query.Page;
+import javax.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.awt.print.Pageable;
 import java.net.URI;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/prod/clinic")
@@ -30,26 +34,54 @@ public class ClinicProdController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid ClinicRegisterDTO clinicRegisterDTO,
-                                    UriComponentsBuilder uriBuilder)  {
-        Clinic clinic = clinicService.create(clinicRegisterDTO);
+    public ResponseEntity<EntityModel<ClinicDetailedDTO>> create(@RequestBody @Valid ClinicRegisterDTO clinicRegisterDTO,
+                                                                 UriComponentsBuilder uriBuilder) {
+        ClinicDetailedDTO clinic = clinicService.create(clinicRegisterDTO);
 
-        URI uri = uriBuilder.path("/api/prod/clinic/{id}").buildAndExpand(clinic.getId()).toUri();
+        EntityModel<ClinicDetailedDTO> clinicModel = EntityModel.of(clinic);
 
-        return ResponseEntity.created(uri).build();
+        Link selfLink = linkTo(methodOn(ClinicProdController.class).find(clinic.id())).withSelfRel();
+        Link clinicsLink = linkTo(methodOn(ClinicProdController.class).list(Pageable.unpaged())).withRel("all-clinics");
+        clinicModel.add(selfLink, clinicsLink);
+
+        URI location = uriBuilder.path("/api/prod/clinic/{id}").buildAndExpand(clinic.id()).toUri();
+        return ResponseEntity.created(location).body(clinicModel);
     }
 
     @GetMapping
-    public ResponseEntity<Page<ClinicDetailedDTO>> list(@PageableDefault(size = 10, page = 0)
-                                                        Pageable pagination) {
+    public ResponseEntity<Page<EntityModel<ClinicDetailedDTO>>> list(@PageableDefault(size = 10, page = 0) Pageable pagination) {
         Page<ClinicDetailedDTO> page = clinicService.list(pagination);
-        return ResponseEntity.ok(page);
+
+        Page<EntityModel<ClinicDetailedDTO>> clinicModels = page.map(clinicDetailedDTO -> {
+            EntityModel<ClinicDetailedDTO> clinicModel = EntityModel.of(clinicDetailedDTO);
+            Link selfLink = linkTo(methodOn(ClinicProdController.class).find(clinicDetailedDTO.id())).withSelfRel();
+            clinicModel.add(selfLink);
+            return clinicModel;
+        });
+
+        return ResponseEntity.ok(clinicModels);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClinicDetailedDTO> find(@PathVariable("id") Long id) {
+    public ResponseEntity<EntityModel<ClinicDetailedDTO>> find(@PathVariable("id") Long id) {
         ClinicDetailedDTO clinicDetailedDTO = clinicService.get(id);
-        return ResponseEntity.ok(clinicDetailedDTO);
+
+        EntityModel<ClinicDetailedDTO> clinicModel = EntityModel.of(clinicDetailedDTO);
+        Link selfLink = linkTo(methodOn(ClinicProdController.class).find(id)).withSelfRel();
+        clinicModel.add(selfLink);
+
+        return ResponseEntity.ok(clinicModel);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EntityModel<ClinicDetailedDTO>> update(@PathVariable("id") Long id, @RequestBody @Valid ClinicUpdateDTO clinicUpdateDTO) {
+        ClinicDetailedDTO clinicDetailedDTO = clinicService.update(id, clinicUpdateDTO);
+
+        EntityModel<ClinicDetailedDTO> clinicModel = EntityModel.of(clinicDetailedDTO);
+        Link selfLink = linkTo(methodOn(ClinicProdController.class).find(id)).withSelfRel();
+        clinicModel.add(selfLink);
+
+        return ResponseEntity.ok(clinicModel);
     }
 
     @DeleteMapping("/{id}")
@@ -57,12 +89,4 @@ public class ClinicProdController {
         clinicService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<ClinicDetailedDTO> update(@PathVariable("id") Long id,
-                                                    @RequestBody ClinicUpdateDTO clinicUpdateDTO) {
-        ClinicDetailedDTO clinicDetailedDTO = clinicService.update(id, clinicUpdateDTO);
-        return ResponseEntity.ok(clinicDetailedDTO);
-    }
-
 }

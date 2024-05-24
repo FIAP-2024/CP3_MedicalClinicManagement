@@ -14,14 +14,15 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("Medical Clinic Management - API")
-                        .version("0.1.0")
+                        .version("1.0.0")
                         .description("The system will make it easier to manage clinics, doctors, patients and book appointments. " +
                                 "appointments. It will be necessary to implement security features and integration with modern web " +
                                 "development APIs.")
                         .contact(new Contact()
-                                .email("technosfiap@gmail.com")
-                                .name("GitHub Technos")
+                                .name("Kaique Santos, Marcelo Augusto e Rodrigo Batista")
                                 .url("https://github.com/FIAP-2024/CP3_MedicalClinicManagement"))
-                        .license(new License()));
+                        .license(new License()
+                        )
+                );
     }
 }

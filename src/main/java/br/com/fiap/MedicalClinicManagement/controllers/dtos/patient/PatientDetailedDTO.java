@@ -2,15 +2,16 @@ package br.com.fiap.MedicalClinicManagement.controllers.dtos.patient;
 
 import br.com.fiap.MedicalClinicManagement.controllers.dtos.appointment.AppointmentDetailedDTO;
 import br.com.fiap.MedicalClinicManagement.controllers.dtos.doctor.DoctorDetailedDTO;
-import br.com.fiap.MedicalClinicManagement.models.Appointment;
 import br.com.fiap.MedicalClinicManagement.models.Patient;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
 public record PatientDetailedDTO(
-
-        Long idPatient,
+        @NotNull
+        Long id,
         String name,
         LocalDate birthDate,
         String cpf,
@@ -20,8 +21,10 @@ public record PatientDetailedDTO(
         String email,
         String gender,
         String maritalStatus,
-        List<DoctorDetailedDTO> doctorlist,
-        List<AppointmentDetailedDTO> appointmentlist
+        @JsonIgnore
+        List<DoctorDetailedDTO> doctorList,
+        @JsonIgnore
+        List<AppointmentDetailedDTO> appointmentList
 ) {
 
     public PatientDetailedDTO(Patient patient) {

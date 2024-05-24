@@ -20,17 +20,17 @@ public class ClinicService {
         this.clinicRepository = clinicRepository;
     }
 
-    public Clinic create(ClinicRegisterDTO clinicRegisterDTO) {
+    public ClinicDetailedDTO create(ClinicRegisterDTO clinicRegisterDTO) {
         Clinic clinic = new Clinic(clinicRegisterDTO);
-        return clinicRepository.save(clinic);
+        return new ClinicDetailedDTO(clinicRepository.save(clinic));
     }
 
     public Page<ClinicDetailedDTO> list(Pageable pagination) {
-        return clinicRepository.findByFinishedAtIsNull(pagination).map(ClinicDetailedDTO::new);
+        return clinicRepository.findByUpdatedAtIsNull(pagination).map(ClinicDetailedDTO::new);
     }
 
     public ClinicDetailedDTO get(Long id) {
-        return new ClinicDetailedDTO(clinicRepository.findOneByFinishedAtIsNullAndIdClinic(id));
+        return new ClinicDetailedDTO(clinicRepository.findOneByUpdatedAtIsNullAndId(id));
     }
 
     public void delete(Long id) {
@@ -38,7 +38,7 @@ public class ClinicService {
     }
 
     public ClinicDetailedDTO update(Long id, ClinicUpdateDTO clinicUpdateDTO) {
-        Clinic clinic = clinicRepository.findOneByFinishedAtIsNullAndIdClinic(id);
+        Clinic clinic = clinicRepository.findOneByUpdatedAtIsNullAndId(id);
 
         clinic.updateInformation(clinicUpdateDTO);
 
