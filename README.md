@@ -102,7 +102,15 @@ prod/Produção:
 
 ##
 
+### Como trocar para outros perfis?
+
+![image](https://github.com/FIAP-2024/CP3_MedicalClinicManagement/assets/80494196/9a856801-b4a2-4d8c-9296-a099fbb55bb6)
+
 ### Perfil Dev/Desenvolvimento:
+
+![image](https://github.com/FIAP-2024/CP3_MedicalClinicManagement/assets/80494196/2565c449-a922-4de1-84b6-138e63790c24)
+
+*Environment Variables: SPRING_PROFILES_ACTIVE=dev*
 
 #### Pacientes
 
@@ -147,6 +155,10 @@ prod/Produção:
 ##
 
 ### Perfil Prod/Produção:
+
+![image](https://github.com/FIAP-2024/CP3_MedicalClinicManagement/assets/80494196/c72b5d0c-a611-4a0f-a81f-d56661e68366)
+
+*Environment Variables: SPRING_PROFILES_ACTIVE=prod*
 
 #### Pacientes
 
