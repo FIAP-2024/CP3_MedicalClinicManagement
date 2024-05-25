@@ -13,6 +13,18 @@ suas informações médicas.
 - Marcelo Augusto de Mello Paixão - RM99466
 - Rodrigo Batista Freire - RM99513
 
+## Tecnologias utilizadas
+
+- [x] Lombok (`org.projectlombok:lombok:1.18.30`)
+- [x] Spring Data JPA (`org.springframework.boot:spring-boot-starter-data-jpa`)
+- [x] Spring Web (`org.springframework.boot:spring-boot-starter-web`)
+- [x] Spring HATEOAS (`org.springframework.boot:spring-boot-starter-hateoas`)
+- [x] H2 Database (`com.h2database:h2`)
+- [x] Bean Validation (`org.springframework.boot:spring-boot-starter-validation`)
+- [x] Spring Security (`org.springframework.boot:spring-boot-starter-security`)
+- [x] Spring OAuth2 Client (`org.springframework.boot:spring-boot-starter-oauth2-client`)
+- [x] SpringDoc OpenAPI Starter WebMVC UI (`org.springdoc:springdoc-openapi-ui:1.6.11`)
+
 ## Login ao Executar
 
 #### Acesso Administrador
