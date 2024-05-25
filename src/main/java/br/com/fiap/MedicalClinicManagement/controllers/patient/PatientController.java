@@ -38,7 +38,7 @@ public class PatientController {
 
         EntityModel<PatientDetailedDTO> patientModel = EntityModel.of(patient);
 
-        Link selfLink = linkTo(methodOn(PatientDevController.class).find(patient.id())).withSelfRel();
+        Link selfLink = linkTo(methodOn(PatientController.class).find(patient.id())).withSelfRel();
         Link appointmentsLink = linkTo(methodOn(PatientController.class).list(Pageable.unpaged())).withRel("all-patients");
         patientModel.add(selfLink, appointmentsLink);
 
@@ -52,7 +52,7 @@ public class PatientController {
 
         Page<EntityModel<PatientDetailedDTO>> entityModels = page.map(patientDetailedDTO -> {
             EntityModel<PatientDetailedDTO> entityModel = EntityModel.of(patientDetailedDTO);
-            Link selfLink = linkTo(methodOn(PatientDevController.class).find(patientDetailedDTO.id())).withSelfRel();
+            Link selfLink = linkTo(methodOn(PatientController.class).find(patientDetailedDTO.id())).withSelfRel();
             entityModel.add(selfLink);
             return entityModel;
         });
@@ -65,7 +65,7 @@ public class PatientController {
         PatientDetailedDTO patientDetailedDTO = patientService.get(id);
 
         EntityModel<PatientDetailedDTO> entityModel = EntityModel.of(patientDetailedDTO);
-        Link selfLink = linkTo(methodOn(PatientDevController.class).find(id)).withSelfRel();
+        Link selfLink = linkTo(methodOn(PatientController.class).find(id)).withSelfRel();
         entityModel.add(selfLink);
 
         return ResponseEntity.ok(entityModel);
@@ -76,7 +76,7 @@ public class PatientController {
         PatientDetailedDTO patientDetailedDTO = patientService.update(id, patientUpdateDTO);
 
         EntityModel<PatientDetailedDTO> entityModel = EntityModel.of(patientDetailedDTO);
-        Link selfLink = linkTo(methodOn(PatientDevController.class).find(id)).withSelfRel();
+        Link selfLink = linkTo(methodOn(PatientController.class).find(id)).withSelfRel();
         entityModel.add(selfLink);
 
         return ResponseEntity.ok(entityModel);

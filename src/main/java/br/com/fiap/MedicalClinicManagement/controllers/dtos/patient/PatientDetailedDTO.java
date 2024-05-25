@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record PatientDetailedDTO(
-        @NotNull
         Long id,
         String name,
         LocalDate birthDate,

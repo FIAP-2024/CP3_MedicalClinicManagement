@@ -1,7 +1,6 @@
 package br.com.fiap.MedicalClinicManagement.controllers.dtos.appointment;
 
-
-
+import br.com.fiap.MedicalClinicManagement.models.Appointment;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
@@ -20,7 +19,17 @@ public record AppointmentRegisterDTO(
 
         @NotBlank
         String status,
+
         @NotBlank
-        String notes
+        String notes,
+
+        @NotNull
+        Long idDoctors,
+
+        @NotNull
+        Long idPacients,
+
+        @NotNull
+        Long idClinics
 ) {
 }

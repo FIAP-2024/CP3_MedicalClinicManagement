@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record AppointmentDetailedDTO(
-        @NotNull
         Long id,
 
         LocalDateTime dateTime,
@@ -21,7 +20,6 @@ public record AppointmentDetailedDTO(
         String notes,
         DoctorDetailedDTO doctor,
         PatientDetailedDTO patient,
-        @JsonIgnore
         ClinicDetailedDTO clinic
 ) {
     public AppointmentDetailedDTO(Appointment appointment){

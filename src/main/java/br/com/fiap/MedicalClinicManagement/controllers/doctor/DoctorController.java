@@ -42,7 +42,7 @@ public class DoctorController {
         Link doctorsLink = linkTo(methodOn(DoctorController.class).list(Pageable.unpaged())).withRel("all-doctors");
         doctorModel.add(selfLink, doctorsLink);
 
-        URI location = uriBuilder.path("/api/public/doctor/{id}").buildAndExpand(doctor.id()).toUri();
+        URI location = uriBuilder.path("/api/public/doctors/{id}").buildAndExpand(doctor.id()).toUri();
         return ResponseEntity.created(location).body(doctorModel);
     }
 

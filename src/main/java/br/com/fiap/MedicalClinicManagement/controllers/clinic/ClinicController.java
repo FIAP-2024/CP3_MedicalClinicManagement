@@ -21,7 +21,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/api/public/clinic")
+@RequestMapping("/api/public/clinics")
 public class ClinicController {
 
     private final ClinicService clinicService;
@@ -42,7 +42,7 @@ public class ClinicController {
         Link clinicsLink = linkTo(methodOn(ClinicController.class).list(Pageable.unpaged())).withRel("all-clinics");
         clinicModel.add(selfLink, clinicsLink);
 
-        URI location = uriBuilder.path("/api/public/clinic/{id}").buildAndExpand(clinic.id()).toUri();
+        URI location = uriBuilder.path("/api/public/clinics/{id}").buildAndExpand(clinic.id()).toUri();
         return ResponseEntity.created(location).body(clinicModel);
     }
 

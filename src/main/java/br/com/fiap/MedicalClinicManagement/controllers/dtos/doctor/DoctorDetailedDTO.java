@@ -9,9 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public record DoctorDetailedDTO(
-        @NotNull
         Long id,
-
         String name,
         String address,
         String specialty,

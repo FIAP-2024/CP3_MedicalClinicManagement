@@ -39,15 +39,15 @@ public class Appointment {
     private LocalDateTime updatedAt;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "doctor_id")
+    @JoinColumn(name = "id_doctor")
     private Doctor doctor;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "patient_id")
+    @JoinColumn(name = "id_pacient")
     private Patient patient;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "clinic_id")
+    @JoinColumn(name = "id_clinic")
     private Clinic clinic;
 
     public Appointment (AppointmentRegisterDTO appointmentRegisterDTO) {

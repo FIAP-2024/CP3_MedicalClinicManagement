@@ -14,7 +14,13 @@ public record DoctorRegisterDTO(
         String address,
 
         @NotBlank
-        String specialty
+        String specialty,
+
+        @NotNull
+        Long idClinic,
+        @NotNull
+        Long idPacients
+
 
 ) {
 }

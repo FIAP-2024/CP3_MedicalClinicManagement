@@ -17,7 +17,16 @@ public record ClinicRegisterDTO(
         @NotBlank
         String workingHours,
         @NotBlank
-        String cnpj
+        String cnpj,
+
+        @NotNull
+        Long idDoctors,
+        @NotNull
+        Long idPacients,
+        @NotNull
+        Long idAppointments
+
+
 
 ) {
 }
