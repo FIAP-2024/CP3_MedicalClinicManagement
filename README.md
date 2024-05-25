@@ -25,6 +25,50 @@ suas informações médicas.
 - [x] Spring OAuth2 Client (`org.springframework.boot:spring-boot-starter-oauth2-client`)
 - [x] SpringDoc OpenAPI Starter WebMVC UI (`org.springdoc:springdoc-openapi-ui:1.6.11`)
 
+## Passos para Execução do Docker
+
+### 1. Compilar a Aplicação
+
+Navegue até o diretório do seu projeto e execute o comando:
+```sh
+./gradlew build
+```
+
+### 2. Construir a Imagem Docker para Diferentes Perfis
+
+Perfil Default:
+```sh
+docker build --build-arg PROFILE=default -t medical-clinic-management-default .
+```
+
+Perfil Dev:
+```sh
+docker build --build-arg PROFILE=dev -t medical-clinic-management-dev .
+```
+
+Perfil Prod:
+```sh
+docker build --build-arg PROFILE=prod -t medical-clinic-management-prod .
+```
+
+### 3. Executar o Contêiner Docker para Diferentes Perfis
+
+Perfil Default:
+```sh
+docker run -p 8080:8080 medical-clinic-management-default
+```
+
+Perfil Dev:
+```sh
+docker run -p 8081:8080 medical-clinic-management-dev
+```
+
+Perfil Prod:
+```sh
+docker run -p 8082:8080 medical-clinic-management-prod
+```
+
+
 ## Login ao Executar
 
 #### Acesso Administrador
