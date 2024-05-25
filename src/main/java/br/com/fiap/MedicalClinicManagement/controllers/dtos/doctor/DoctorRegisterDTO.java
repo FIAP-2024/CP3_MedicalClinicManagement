@@ -14,12 +14,12 @@ public record DoctorRegisterDTO(
         String address,
 
         @NotBlank
-        String specialty,
-
-        @NotNull
-        Long idClinic,
-        @NotNull
-        Long idPacients
+        String specialty
+//
+//        @NotNull
+//        Long idClinic
+//        @NotNull
+//        Long idPacients
 
 
 ) {

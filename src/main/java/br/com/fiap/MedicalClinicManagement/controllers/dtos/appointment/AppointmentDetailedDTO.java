@@ -29,4 +29,18 @@ public record AppointmentDetailedDTO(
                 new PatientDetailedDTO(appointment.getPatient()),
                 new ClinicDetailedDTO(appointment.getClinic()));
     }
+
+    public Appointment toModel() {
+        Appointment appointment = new Appointment();
+        appointment.setId(this.id);
+        appointment.setDateTime(this.dateTime);
+        appointment.setAppointmentType(this.appointmentType);
+        appointment.setStatus(this.status);
+        appointment.setNotes(this.notes);
+        appointment.setDoctor(this.doctor.toModel());
+        appointment.setPatient(this.patient.toModel());
+        appointment.setClinic(this.clinic.toModel());
+        return appointment;
+    }
+
 }

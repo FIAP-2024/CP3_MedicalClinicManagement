@@ -3,7 +3,10 @@ package br.com.fiap.MedicalClinicManagement.services;
 import br.com.fiap.MedicalClinicManagement.controllers.dtos.doctor.DoctorDetailedDTO;
 import br.com.fiap.MedicalClinicManagement.controllers.dtos.doctor.DoctorRegisterDTO;
 import br.com.fiap.MedicalClinicManagement.controllers.dtos.doctor.DoctorUpdateDTO;
+import br.com.fiap.MedicalClinicManagement.controllers.dtos.patient.PatientDetailedDTO;
+import br.com.fiap.MedicalClinicManagement.controllers.dtos.patient.PatientUpdateDTO;
 import br.com.fiap.MedicalClinicManagement.models.Doctor;
+import br.com.fiap.MedicalClinicManagement.models.Patient;
 import br.com.fiap.MedicalClinicManagement.repositories.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,11 +32,15 @@ public class DoctorService {
     }
 
     public DoctorDetailedDTO get(Long id) {
-        return new DoctorDetailedDTO(doctorRepository.findOneByUpdatedAtIsNullAndId(id));
+        Doctor doctor = doctorRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Doutor com o ID: {"+ id +"} Não encontrado na base de dados."));
+
+        return new DoctorDetailedDTO(doctor);
     }
 
     public DoctorDetailedDTO update(Long id, DoctorUpdateDTO doctorUpdateDTO) {
-        Doctor doctor = doctorRepository.findOneByUpdatedAtIsNullAndId(id);
+        Doctor doctor = doctorRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Doutor com o ID: {"+ id +"} Não encontrado na base de dados."));
 
         doctor.updateInformation(doctorUpdateDTO);
 

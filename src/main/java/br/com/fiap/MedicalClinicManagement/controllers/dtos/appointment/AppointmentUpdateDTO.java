@@ -6,7 +6,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public record AppointmentUpdateDTO(
-        @NotNull
         Long id,
         LocalDateTime dateTime,
         String appointmentType,

@@ -7,6 +7,7 @@ import br.com.fiap.MedicalClinicManagement.models.Clinic;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public record ClinicDetailedDTO(
         Long id,
@@ -17,11 +18,11 @@ public record ClinicDetailedDTO(
         String workingHours,
         String cnpj,
         @JsonIgnore
-        List<DoctorDetailedDTO> doctorlist,
+        List<DoctorDetailedDTO> doctorList,
         @JsonIgnore
-        List <PatientDetailedDTO> patientlist,
+        List <PatientDetailedDTO> patientList,
         @JsonIgnore
-        List<AppointmentDetailedDTO> appointmentlist
+        List<AppointmentDetailedDTO> appointmentList
 
 ) {
 
@@ -33,6 +34,21 @@ public record ClinicDetailedDTO(
                 clinic.getPatients().stream().map(PatientDetailedDTO::new).toList(),
                 clinic.getAppointments().stream().map(AppointmentDetailedDTO::new).toList()
         );
+    }
+
+    public Clinic toModel() {
+        Clinic clinic = new Clinic();
+        clinic.setId(this.id);
+        clinic.setName(this.name);
+        clinic.setAddress(this.address);
+        clinic.setPhone(this.phone);
+        clinic.setEmail(this.email);
+        clinic.setWorkingHours(this.workingHours);
+        clinic.setCnpj(this.cnpj);
+        clinic.setDoctors(this.doctorList.stream().map(DoctorDetailedDTO::toModel).collect(Collectors.toList()));
+        clinic.setPatients(this.patientList.stream().map(PatientDetailedDTO::toModel).collect(Collectors.toList()));
+        clinic.setAppointments(this.appointmentList.stream().map(AppointmentDetailedDTO::toModel).collect(Collectors.toList()));
+        return clinic;
     }
 
 }

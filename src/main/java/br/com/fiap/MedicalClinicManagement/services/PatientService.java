@@ -20,6 +20,7 @@ public class PatientService {
         this.patientRepository = patientRepository;
     }
 
+
     public PatientDetailedDTO create(PatientRegisterDTO patientRegisterDTO) {
         Patient patient = new Patient(patientRegisterDTO);
         return new PatientDetailedDTO(patientRepository.save(patient));
@@ -30,11 +31,15 @@ public class PatientService {
     }
 
     public PatientDetailedDTO get(Long id) {
-        return new PatientDetailedDTO(patientRepository.findOneByUpdatedAtIsNullAndId(id));
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Paciente com o ID: {"+ id +"} Não encontrado na base de dados."));
+
+        return new PatientDetailedDTO(patient);
     }
 
     public PatientDetailedDTO update(Long id, PatientUpdateDTO patientUpdateDTO) {
-        Patient patient = patientRepository.findOneByUpdatedAtIsNullAndId(id);
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Paciente com o ID: {"+ id +"} Não encontrado na base de dados."));
 
         patient.updateInformation(patientUpdateDTO);
 

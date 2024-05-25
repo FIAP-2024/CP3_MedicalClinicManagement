@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Entity
@@ -43,7 +42,7 @@ public class Appointment {
     private Doctor doctor;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_pacient")
+    @JoinColumn(name = "id_patient")
     private Patient patient;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

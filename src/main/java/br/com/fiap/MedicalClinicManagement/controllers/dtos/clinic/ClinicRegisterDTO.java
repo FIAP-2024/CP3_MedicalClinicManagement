@@ -17,14 +17,14 @@ public record ClinicRegisterDTO(
         @NotBlank
         String workingHours,
         @NotBlank
-        String cnpj,
-
-        @NotNull
-        Long idDoctors,
-        @NotNull
-        Long idPacients,
-        @NotNull
-        Long idAppointments
+        String cnpj
+//
+//        @NotNull
+//        Long idDoctors,
+//        @NotNull
+//        Long idPacients,
+//        @NotNull
+//        Long idAppointments
 
 
 

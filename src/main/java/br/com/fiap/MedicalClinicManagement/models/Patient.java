@@ -26,7 +26,7 @@ public class Patient {
     @Column(name = "ds_name")
     private String name;
 
-    @Column(name = "ds_bitthDate")
+    @Column(name = "ds_birthDate")
     private LocalDate birthDate;
 
     @Column(name = "ds_cpf")
@@ -47,7 +47,7 @@ public class Patient {
     @Column(name = "ds_gender")
     private String gender;
 
-    @Column(name = "ds_martalStatus")
+    @Column(name = "ds_maritalStatus")
     private String maritalStatus;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

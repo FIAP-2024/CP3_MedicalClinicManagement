@@ -4,7 +4,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public record PatientUpdateDTO(
-        @NotNull
         Long id,
         String name,
         LocalDate birthDate,

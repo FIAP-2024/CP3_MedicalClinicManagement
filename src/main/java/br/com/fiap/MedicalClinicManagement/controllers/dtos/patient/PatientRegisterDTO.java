@@ -25,11 +25,11 @@ public record PatientRegisterDTO(
         @NotBlank
         String gender,
         @NotBlank
-        String maritalStatus,
-        @NotNull
-        Long idAppointments,
-        @NotNull
-        Long idDoctor
+        String maritalStatus
+//        @NotNull
+//        Long idAppointments,
+//        @NotNull
+//        Long idDoctor
 
 ) {
 }

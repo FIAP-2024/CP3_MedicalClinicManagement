@@ -27,7 +27,7 @@ public record AppointmentRegisterDTO(
         Long idDoctors,
 
         @NotNull
-        Long idPacients,
+        Long idPatients,
 
         @NotNull
         Long idClinics

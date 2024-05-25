@@ -8,5 +8,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     Page<Doctor> findByUpdatedAtIsNull(Pageable pagination);
 
-    Doctor findOneByUpdatedAtIsNullAndId(Long idDoctor);
 }

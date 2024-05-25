@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public record PatientDetailedDTO(
         Long id,
@@ -35,5 +36,23 @@ public record PatientDetailedDTO(
                 patient.getAppointments().stream().map(AppointmentDetailedDTO::new).toList()
         );
     }
+
+    public Patient toModel() {
+        Patient patient = new Patient();
+        patient.setId(this.id);
+        patient.setName(this.name);
+        patient.setBirthDate(this.birthDate);
+        patient.setCpf(this.cpf);
+        patient.setRg(this.rg);
+        patient.setAddress(this.address);
+        patient.setPhone(this.phone);
+        patient.setEmail(this.email);
+        patient.setGender(this.gender);
+        patient.setMaritalStatus(this.maritalStatus);
+        patient.setDoctors(this.doctorList.stream().map(DoctorDetailedDTO::toModel).collect(Collectors.toList()));
+        patient.setAppointments(this.appointmentList.stream().map(AppointmentDetailedDTO::toModel).collect(Collectors.toList()));
+        return patient;
+    }
+
 
 }
