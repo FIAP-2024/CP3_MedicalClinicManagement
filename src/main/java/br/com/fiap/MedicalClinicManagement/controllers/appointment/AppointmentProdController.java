@@ -24,7 +24,7 @@ import java.net.URI;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
-@RequestMapping("api/public/appointments")
+@RequestMapping("api/prod/appointments")
 @Profile("prod")
 public class AppointmentProdController {
     private final AppointmentService appointmentService;
