@@ -16,12 +16,12 @@ suas informações médicas.
 ## Login ao Executar
 
 #### Acesso Administrador
-Usuário: admin
-Senha: admin
+- Usuário: admin
+- Senha: admin
 
 #### Acesso Usuário
-Usuário: user
-Senha: user
+- Usuário: user
+- Senha: user
 
 
 ## Acessos ao [H2 - Database](http://localhost:8080/h2-console)
